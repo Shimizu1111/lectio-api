@@ -30,6 +30,7 @@ func (s *lectiosrvc) Create(ctx context.Context, p *lectio.CreateProductPayload)
 
 // Update implements update.
 func (s *lectiosrvc) Update(ctx context.Context, p *lectio.UpdateProductPayload) (res string, err error) {
+	repository.UpdateProduct(p)
 	s.logger.Print("lectio.update")
 	return
 }
@@ -62,6 +63,7 @@ func (s *lectiosrvc) FindAll(ctx context.Context) (res []*lectio.Findproductresu
 
 // Delete implements delete.
 func (s *lectiosrvc) Delete(ctx context.Context, p *lectio.DeletePayload) (res string, err error) {
+	repository.DeleteProduct(p.BookID)
 	s.logger.Print("lectio.delete")
 	return
 }

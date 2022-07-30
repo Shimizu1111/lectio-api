@@ -33,7 +33,7 @@ func SaveProduct(p *lectio.CreateProductPayload) {
 
 func UpdateProduct(p *lectio.UpdateProductPayload) {
 	var product entity.Book
-	if err := database.Db.Where("id = ?", p).First(&product).Error; err != nil {
+	if err := database.Db.Where("id = ?", p.BookID).First(&product).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
 	// update
