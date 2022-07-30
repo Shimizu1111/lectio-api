@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
+	github.com/jinzhu/copier v0.3.5
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.4.0
 	goa.design/goa/v3 v3.7.13

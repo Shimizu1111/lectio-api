@@ -60,7 +60,7 @@ var _ = Service("lectio", func() {
 	})
 	// FindAll
 	Method("findAll", func() {
-		Result(response.FindAllProductResult)
+		Result(ArrayOf(response.FindProductResult))
 		HTTP(func() {
 			GET("/v1/books")
 		})

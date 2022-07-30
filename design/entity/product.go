@@ -15,9 +15,9 @@ type User struct {
 }
 
 type Book struct {
-	BookID           uint
+	ID               uint
 	UserID           uint
-	BookName         string
+	Name             string
 	Author           string
 	Publisher        string
 	Price            int
