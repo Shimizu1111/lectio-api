@@ -38,35 +38,26 @@ func UpdateProduct(p *lectio.UpdateProductPayload) {
 }
 
 func FindProduct(id uint) entity.Book {
-	//var product entity.Book
-	product := []entity.Book{}
+	var product entity.Book
 	fmt.Println("エラーの確認")
-	if err := database.Db.Find(&product, "id = 1"); err != nil {
+	if err := database.Db.Where("id = ?", id).First(&product).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
-	return product[0]
+	return product
 }
 
 func FindAllProduct(products []*entity.Book) []*entity.Book {
-	//var products entity.Book
 	if err := database.Db.Find(&products).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
-	fmt.Println(products)
-	// db.Where("user_id = ?", id).Find(&product)
-	// for i := range product {
-	// 	db.Model(product[i]).Related(&product[i].emails)
-	// }
 
 	return products
 }
 
 func DeleteProduct(id int) {
-	// find
 	var product entity.Book
 	if err := database.Db.Where("id = ?", id).First(&product).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
-	// delete
 	database.Db.Delete(&product)
 }

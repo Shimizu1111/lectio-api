@@ -23,6 +23,7 @@ func NewLectio(logger *log.Logger) lectio.Service {
 
 // Create implements create.
 func (s *lectiosrvc) Create(ctx context.Context, p *lectio.CreateProductPayload) (res string, err error) {
+	repository.SaveProduct(p)
 	s.logger.Print("lectio.create")
 	return
 }
@@ -35,7 +36,16 @@ func (s *lectiosrvc) Update(ctx context.Context, p *lectio.UpdateProductPayload)
 
 // Find implements find.
 func (s *lectiosrvc) Find(ctx context.Context, p *lectio.FindProductPayload) (res *lectio.Findproductresult, err error) {
-	res = &lectio.Findproductresult{}
+	product := repository.FindProduct(p.BookID)
+	res = &lectio.Findproductresult{
+		ID:               &p.BookID,
+		UserID:           &product.UserID,
+		Name:             &product.Name,
+		Author:           &product.Author,
+		Publisher:        &product.Publisher,
+		Price:            &product.Price,
+		RegistrationDate: &product.RegistrationDate,
+	}
 	s.logger.Print("lectio.find")
 	return
 }
