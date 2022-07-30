@@ -10,6 +10,8 @@ var CreateProductPayload = Type("CreateProductPayload", func() {
 	Field(3, "author", String)
 	Field(4, "publisher", String)
 	Field(5, "price", Int)
+	Field(6, "registrationDate", String)
+	Field(7, "bookStatus", String)
 	Required("userId", "bookName")
 })
 
@@ -19,6 +21,7 @@ var UpdateProductPayload = Type("UpdateProductPayload", func() {
 	Field(3, "author", String)
 	Field(4, "publisher", String)
 	Field(5, "price", Int)
+	Field(6, "registrationDate", String)
 	Required("bookId")
 })
 

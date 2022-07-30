@@ -7,6 +7,7 @@ import (
 
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/Shimizu1111/lectio/design/entity"
 	lectio "github.com/Shimizu1111/lectio/design/gen/lectio"
@@ -14,13 +15,19 @@ import (
 )
 
 func SaveProduct(p *lectio.CreateProductPayload) {
+	nowTime := time.Now().Format("2006-01-02 15:04:05")
 	product := entity.Book{
-		UserID:    p.UserID,
-		Name:      p.BookName,
-		Author:    *p.Author,
-		Publisher: *p.Publisher,
-		Price:     *p.Price,
+		UserID:           p.UserID,
+		Name:             p.BookName,
+		Author:           *p.Author,
+		Publisher:        *p.Publisher,
+		Price:            *p.Price,
+		RegistrationDate: nowTime,
+		BookStatus:       *p.BookStatus,
+		CreatedAt:        nowTime,
+		UpdatedAt:        nowTime,
 	}
+	fmt.Println(product)
 	database.Db.Create(&product)
 }
 

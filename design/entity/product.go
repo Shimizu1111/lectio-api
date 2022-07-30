@@ -22,6 +22,7 @@ type Book struct {
 	Publisher        string
 	Price            int
 	RegistrationDate string
+	BookStatus       string
 	IsDeleted        bool
 	CreatedAt        string
 	UpdatedAt        string
