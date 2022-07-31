@@ -11,10 +11,14 @@ import (
 
 	"github.com/Shimizu1111/lectio/design/entity"
 	lectio "github.com/Shimizu1111/lectio/design/gen/lectio"
-	"github.com/Shimizu1111/lectio/src/database"
+	"github.com/jinzhu/gorm"
 )
 
-func SaveProduct(p *lectio.CreateProductPayload) {
+type Repository struct {
+	*gorm.DB
+}
+
+func (s *Repository) SaveProduct(p *lectio.CreateProductPayload) {
 	nowTime := time.Now().Format("2006-01-02 15:04:05")
 	product := entity.Book{
 		UserID:           p.UserID,
@@ -28,12 +32,12 @@ func SaveProduct(p *lectio.CreateProductPayload) {
 		UpdatedAt:        nowTime,
 	}
 	fmt.Println(product)
-	database.Db.Create(&product)
+	s.Create(&product)
 }
 
-func UpdateProduct(p *lectio.UpdateProductPayload) {
+func (s *Repository) UpdateProduct(p *lectio.UpdateProductPayload) {
 	var product entity.Book
-	if err := database.Db.Where("id = ?", p.BookID).First(&product).Error; err != nil {
+	if err := s.Where("id = ?", p.BookID).First(&product).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
 	// update
@@ -41,30 +45,30 @@ func UpdateProduct(p *lectio.UpdateProductPayload) {
 	product.Author = *p.Author
 	product.Publisher = *p.Publisher
 	product.Price = *p.Price
-	database.Db.Save(&product)
+	s.Save(&product)
 }
 
-func FindProduct(id uint) entity.Book {
+func (s *Repository) FindProduct(id uint) entity.Book {
 	var product entity.Book
 	fmt.Println("エラーの確認")
-	if err := database.Db.Where("id = ?", id).First(&product).Error; err != nil {
+	if err := s.Where("id = ?", id).First(&product).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
 	return product
 }
 
-func FindAllProduct(products []*entity.Book) []*entity.Book {
-	if err := database.Db.Find(&products).Error; err != nil {
+func (s *Repository) FindAllProduct(products []*entity.Book) []*entity.Book {
+	if err := s.Find(&products).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
 
 	return products
 }
 
-func DeleteProduct(id int) {
+func (s *Repository) DeleteProduct(id int) {
 	var product entity.Book
-	if err := database.Db.Where("id = ?", id).First(&product).Error; err != nil {
+	if err := s.Where("id = ?", id).First(&product).Error; err != nil {
 		log.Fatal("NOT FOUND PRODUCT")
 	}
-	database.Db.Delete(&product)
+	s.Delete(&product)
 }
