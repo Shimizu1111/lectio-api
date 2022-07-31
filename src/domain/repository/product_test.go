@@ -107,7 +107,7 @@ func TestCalcsrvcFindAllProduct(t *testing.T) {
 	var books []*entity.Book
 	res := r.FindAllProduct(books)
 
-	// Mockのデータと期待値が一致していることを確認
+	// 全件取得の結果と期待値が一致していることを確認
 	for i, v := range expect {
 
 		// TODO:構造体をループで取得する
