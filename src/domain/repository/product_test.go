@@ -11,7 +11,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-// Mockを作成
+// MockDBを初期化
 func InitDBMock() (*gorm.DB, sqlmock.Sqlmock, error) {
 	db, mock, err := sqlmock.New()
 	if err != nil {
@@ -27,7 +27,6 @@ func InitDBMock() (*gorm.DB, sqlmock.Sqlmock, error) {
 
 // 全件取得が正常に行われることを確認
 func TestCalcsrvcFindAllProduct(t *testing.T) {
-	//MockDBを初期化する
 	mockDB, mock, err := InitDBMock()
 
 	if err != nil {
@@ -42,10 +41,10 @@ func TestCalcsrvcFindAllProduct(t *testing.T) {
 		{
 			ID:               1,
 			UserID:           1,
-			Name:             "この素晴らしい世界に祝福を!",
-			Author:           "暁なつめ1",
-			Publisher:        "角川スニーカー文庫",
-			Price:            700,
+			Name:             "坊っちゃん",
+			Author:           "夏目漱石",
+			Publisher:        "角川文庫",
+			Price:            500,
 			RegistrationDate: "2021-01-01 10:00:00",
 			BookStatus:       "favorite",
 			IsDeleted:        false,
@@ -54,10 +53,10 @@ func TestCalcsrvcFindAllProduct(t *testing.T) {
 		},
 		{
 			ID:               2,
-			UserID:           2,
-			Name:             "この素晴らしい世界に祝福を!",
-			Author:           "暁なつめ2",
-			Publisher:        "角川スニーカー文庫",
+			UserID:           1,
+			Name:             "吾輩は猫である",
+			Author:           "夏目漱石",
+			Publisher:        "新潮文庫",
 			Price:            700,
 			RegistrationDate: "2022-07-19 23:19:28",
 			BookStatus:       "favorite",
@@ -67,11 +66,11 @@ func TestCalcsrvcFindAllProduct(t *testing.T) {
 		},
 		{
 			ID:               3,
-			UserID:           3,
-			Name:             "この素晴らしい世界に祝福を!",
-			Author:           "暁なつめ3",
-			Publisher:        "角川スニーカー文庫",
-			Price:            700,
+			UserID:           2,
+			Name:             "走れメロス",
+			Author:           "太宰治",
+			Publisher:        "新潮文庫",
+			Price:            1000,
 			RegistrationDate: "2022-07-19 23:42:24",
 			BookStatus:       "favorite",
 			IsDeleted:        false,
@@ -99,9 +98,9 @@ func TestCalcsrvcFindAllProduct(t *testing.T) {
 	// TODO:AddRowをループで生成できるようにする
 	mock.ExpectQuery(regexp.QuoteMeta(`books`)).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow("1", "1", "この素晴らしい世界に祝福を!", "暁なつめ1", "角川スニーカー文庫", "700", "2021-01-01 10:00:00", "favorite", "0", "2022-07-19 14:19:01", "2022-07-19 14:19:01").
-			AddRow("2", "2", "この素晴らしい世界に祝福を!", "暁なつめ2", "角川スニーカー文庫", "700", "2022-07-19 23:19:28", "favorite", "0", "2022-07-19 14:19:28", "2022-07-19 14:19:28").
-			AddRow("3", "3", "この素晴らしい世界に祝福を!", "暁なつめ3", "角川スニーカー文庫", "700", "2022-07-19 23:42:24", "favorite", "0", "2022-07-19 14:42:24", "2022-07-19 14:42:24"),
+			AddRow("1", "1", "坊っちゃん", "夏目漱石", "角川文庫", "500", "2021-01-01 10:00:00", "favorite", "0", "2022-07-19 14:19:01", "2022-07-19 14:19:01").
+			AddRow("2", "1", "吾輩は猫である", "夏目漱石", "新潮文庫", "700", "2022-07-19 23:19:28", "favorite", "0", "2022-07-19 14:19:28", "2022-07-19 14:19:28").
+			AddRow("3", "2", "走れメロス", "太宰治", "新潮文庫", "1000", "2022-07-19 23:42:24", "favorite", "0", "2022-07-19 14:42:24", "2022-07-19 14:42:24"),
 		)
 
 	// 全件取得実行
