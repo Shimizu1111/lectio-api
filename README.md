@@ -1,5 +1,9 @@
 # lectio-api
 
+### Goaの利用
+```sh
+cd design;goa gen github.com/Shimizu1111/lectio/design;cd ../;go build ./design/cmd/lectio && go build ./design/cmd/lectio-cli;./lectio
+```
 
 ### APIの例
 * Read
@@ -24,11 +28,11 @@ curl -X POST \
     -H "Content-Type: application/json" \
     -d \
     '{
-        "userId": 4,
-        "bookName": "オーバーロード",
-        "author": "先生",
-        "publisher": "出版社",
-        "price": 850,
+        "userId": 1,
+        "bookName": "坊っちゃん",
+        "author": "夏目漱石",
+        "publisher": "角川文庫",
+        "price": 500,
         "bookStatus": "favorite"
     }' \
 'localhost:8000/v1/books'
@@ -40,11 +44,11 @@ curl -X PUT \
     -H "Content-Type: application/json" \
     -d \
     '{
-        "bookName": "オーバーロード2",
-        "author": "先生2",
-        "publisher": "出版社2",
-        "price": 2850,
-        "bookStatus": "favorite2"
+        "bookName": "吾輩は猫である",
+        "author": "夏目漱石",
+        "publisher": "新潮文庫",
+        "price": 700,
+        "bookStatus": "favorite"
     }' \
 'localhost:8000/v1/books/14'
 ```
